@@ -2,25 +2,26 @@ package com.example.demo.test;
 
 public enum MasterCardType implements CardLogoType {
 
-    STANDARD("501"),
-    WORLD("502"),
-    GOLD("503"),
-    PLATINUM("504"),
-    BLACK("505");
+    STANDARD("Standard"),
+    WORLD("World"),
+    GOLD("Gold"),
+    PLATINUM("Platinum"),
+    BLACK("Black");
 
-    private String code;
+    private String value;
 
-    MasterCardType(String code) {
-        this.code = code;
+    MasterCardType(String value) {
+        this.value = value;
     }
 
     @Override
-    public String getCode() {
-        return this.code;
+    public String getValue() {
+        return this.value;
     }
 
     @Override
-    public CardType getCardType() {
-        return CardType.MASTERCARD;
+    public String getParent() {
+        return CardType.MASTERCARD.getValue();
     }
+    
 }

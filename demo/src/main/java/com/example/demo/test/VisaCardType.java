@@ -1,26 +1,25 @@
 package com.example.demo.test;
 
 public enum VisaCardType implements CardLogoType {
+	
+    INFINITE("Infinite"),
+    SIGNATURE("Signature"),
+    PLATINUM("Platinum"),
+    GOLD("Gold"),
+    CLASSIC("Classic");
 
-    INFINITE("401"),
-    SIGNATURE("402"),
-    PLATINUM("403"),
-    GOLD("404"),
-    CLASSIC("405");
+	private String value;
+	
+    VisaCardType(String value) {
+		this.value = value;
+	}
 
-    private String code;
-
-    VisaCardType(String code) {
-        this.code = code;
+	public String getParent() {
+        return CardType.VISA.getValue();
     }
 
-    @Override
-    public String getCode() {
-        return this.code;
-    }
-
-    @Override
-    public CardType getCardType() {
-        return CardType.VISA;
-    }
+    public String getValue() {
+		return this.value;
+	}
+    
 }
