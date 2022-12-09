@@ -1,7 +1,5 @@
 package com.example.demo.relation.enums;
 
-import java.util.Optional;
-
 import com.example.demo.relation.Relation;
 
 public enum ProfessionalPersonalRelation implements Relation {
@@ -20,14 +18,8 @@ public enum ProfessionalPersonalRelation implements Relation {
 	}
 	
 	@Override
-	public String getParent() {
-        return ProfessionalSubCategory.PERSONAL.getValue();
+	public Relation getParent() {
+        return ProfessionalSubCategory.PERSONAL;
     }
-
-	@Override
-	public Optional<Relation> getEnum(String value) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
-	}
 
 }
