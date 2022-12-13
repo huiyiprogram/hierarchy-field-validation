@@ -1,17 +1,19 @@
 package com.example.demo.relation;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Stream;
-
-import com.example.demo.relation.enums.FamilyExtendedRelation;
-import com.example.demo.relation.enums.FamilyImmediateRelation;
-import com.example.demo.relation.enums.FamilySubCategory;
-import com.example.demo.relation.enums.ProfessionalPersonalRelation;
-import com.example.demo.relation.enums.ProfessionalSubCategory;
-import com.example.demo.relation.enums.ProfessionalWorkRelation;
 import com.example.demo.relation.enums.RelationCategory;
+import com.example.demo.relation.enums.RelationSubCategory;
+
+//import java.util.HashMap;
+//import java.util.Optional;
+//import java.util.stream.Stream;
+//
+//import com.example.demo.relation.enums.FamilyExtendedRelation;
+//import com.example.demo.relation.enums.FamilyImmediateRelation;
+//import com.example.demo.relation.enums.FamilySubCategory;
+//import com.example.demo.relation.enums.ProfessionalPersonalRelation;
+//import com.example.demo.relation.enums.ProfessionalSubCategory;
+//import com.example.demo.relation.enums.ProfessionalWorkRelation;
+//import com.example.demo.relation.enums.RelationCategory;
 
 public interface Relation {
 	
@@ -25,9 +27,10 @@ public interface Relation {
 	public static final Relation finalRelation = null;
 
     String getValue();
-    Relation getParent();
+    RelationCategory getParent(RelationSubCategory sub);
+    RelationCategory getCategoryByValue(String sub);
 
-    static boolean isValidRelationHierarchy(String relationCategory, String relationSubCategory, String relation) {
+//    static boolean isValidRelationHierarchy(String relationCategory, String relationSubCategory, String relation) {
 //    	// Implementation version 1
 //    	List<Relation> relationTypes = List.of(RelationCategory.values());
 //        
@@ -67,85 +70,65 @@ public interface Relation {
     	
     	// Implementation Version 2
         // Relation Category
-        Relation relationCategoryEnum = RelationCategory.valueOf(relationCategory);
-        
-        // Relation Sub Category
-        Relation familySubCategoryEnum = FamilySubCategory.valueOf(relationSubCategory);
-        Relation professionalSubCategoryEnum = ProfessionalSubCategory.valueOf(relationSubCategory);
-        
-        // Relation
-        // -- Family
-        Relation familyImmediateRelationEnum = FamilyImmediateRelation.valueOf(relation);
-        Relation familyExtendedRelationEnum = FamilyExtendedRelation.valueOf(relation);
-        // -- Professional
-        Relation professionalPersonalRelationEnum = ProfessionalPersonalRelation.valueOf(relation);
-        Relation professionalWorkRelationEnum = ProfessionalWorkRelation.valueOf(relation);
-        
-        HashMap<HashMapKey, Object> relationCategoryHashMap = getEnumDetails(relationCategoryEnum);
-        HashMap<HashMapKey, Object> relationSubCategoryHashMap = getEnumDetails(familySubCategoryEnum, 
-				   																professionalSubCategoryEnum);
-        HashMap<HashMapKey, Object> relationHashMap = getEnumDetails(familyImmediateRelationEnum, 
-																	 familyExtendedRelationEnum,
-																	 professionalPersonalRelationEnum,
-																	 professionalWorkRelationEnum);
-        
-        boolean relationCategoryIsValidEnum = (boolean) relationCategoryHashMap.get(HashMapKey.IS_VALID_RELATION);
-        boolean relationSubCategoryIsValidEnum = (boolean) relationSubCategoryHashMap.get(HashMapKey.IS_VALID_RELATION);
-        boolean relationIsValidEnum = (boolean) relationHashMap.get(HashMapKey.IS_VALID_RELATION);
-
-        boolean isValidEnum = relationCategoryIsValidEnum && 
-        					  relationSubCategoryIsValidEnum && 
-        					  relationIsValidEnum;
-        boolean isValidHierarchy = false;
-        
-        if(isValidEnum) {
-        	Relation relationSubCategoryEnum = (Relation) relationSubCategoryHashMap.get(HashMapKey.RELATION);
-        	Relation relationEnum = (Relation) relationHashMap.get(HashMapKey.RELATION);
-
-        	boolean relationCategoryIsValidHierarchy = relationCategoryEnum.equals(relationSubCategoryEnum);
-        	boolean relationSubCategoryIsValidHierarchy = relationSubCategoryEnum.equals(relationEnum);
-        	
-        	if(relationCategoryIsValidHierarchy && relationSubCategoryIsValidHierarchy) {
-        		isValidHierarchy = true;
-        	}
-        } 
-
-		return isValidHierarchy;
-    }
-    
-    static HashMap<HashMapKey, Object> getEnumDetails(Relation... relations) {
-    	// Try to retrieve relation enum
-    	Optional<Relation> relation = Stream.of(relations).filter(relationElement -> relationElement != null).findFirst();
-    	
-    	HashMap<HashMapKey, Object> enumDetailsHashMap = new HashMap<>();
-    	if(relation.isPresent()) {
-    		enumDetailsHashMap.put(HashMapKey.RELATION, relation.get());
-    		enumDetailsHashMap.put(HashMapKey.IS_VALID_RELATION, true);
-    	} else {
-    		enumDetailsHashMap.put(HashMapKey.IS_VALID_RELATION, false);
-    	}
-    	
-    	return enumDetailsHashMap;
-    }
-    
-    static HashMap<HashMapKey, Object> getEnumDetailsTest(List<Relation> relationCategoryList, List<Relation> relationSubCategoryList, List<Relation> finalRelationList) {
-    	// Retrieve Relation Category Enum
-    	Optional<List<Relation>> relationCategoryEnum = Stream.of(relationCategoryList).filter(relationElement -> relationElement != null).findFirst();
-    	// Retrieve Relation SubCategory Enum
-    	Optional<List<Relation>> relationSubCategoryEnum = Stream.of(relationSubCategoryList).filter(relationElement -> relationElement != null).findFirst();
-    	// Retrieve Relation Category Enum
-    	Optional<List<Relation>> finalRelationEnum = Stream.of(finalRelationList).filter(relationElement -> relationElement != null).findFirst();
-    	
-    	
-    	HashMap<HashMapKey, Object> enumDetailsHashMap = new HashMap<>();
+//        Relation relationCategoryEnum = RelationCategory.valueOf(relationCategory);
+//        
+//        // Relation Sub Category
+//        Relation familySubCategoryEnum = FamilySubCategory.valueOf(relationSubCategory);
+//        Relation professionalSubCategoryEnum = ProfessionalSubCategory.valueOf(relationSubCategory);
+//        
+//        // Relation
+//        // -- Family
+//        Relation familyImmediateRelationEnum = FamilyImmediateRelation.valueOf(relation);
+//        Relation familyExtendedRelationEnum = FamilyExtendedRelation.valueOf(relation);
+//        // -- Professional
+//        Relation professionalPersonalRelationEnum = ProfessionalPersonalRelation.valueOf(relation);
+//        Relation professionalWorkRelationEnum = ProfessionalWorkRelation.valueOf(relation);
+//        
+//        HashMap<HashMapKey, Object> relationCategoryHashMap = getEnumDetails(relationCategoryEnum);
+//        HashMap<HashMapKey, Object> relationSubCategoryHashMap = getEnumDetails(familySubCategoryEnum, 
+//				   																professionalSubCategoryEnum);
+//        HashMap<HashMapKey, Object> relationHashMap = getEnumDetails(familyImmediateRelationEnum, 
+//																	 familyExtendedRelationEnum,
+//																	 professionalPersonalRelationEnum,
+//																	 professionalWorkRelationEnum);
+//        
+//        boolean relationCategoryIsValidEnum = (boolean) relationCategoryHashMap.get(HashMapKey.IS_VALID_RELATION);
+//        boolean relationSubCategoryIsValidEnum = (boolean) relationSubCategoryHashMap.get(HashMapKey.IS_VALID_RELATION);
+//        boolean relationIsValidEnum = (boolean) relationHashMap.get(HashMapKey.IS_VALID_RELATION);
+//
+//        boolean isValidEnum = relationCategoryIsValidEnum && 
+//        					  relationSubCategoryIsValidEnum && 
+//        					  relationIsValidEnum;
+//        boolean isValidHierarchy = false;
+//        
+//        if(isValidEnum) {
+//        	Relation relationSubCategoryEnum = (Relation) relationSubCategoryHashMap.get(HashMapKey.RELATION);
+//        	Relation relationEnum = (Relation) relationHashMap.get(HashMapKey.RELATION);
+//
+//        	boolean relationCategoryIsValidHierarchy = relationCategoryEnum.equals(relationSubCategoryEnum);
+//        	boolean relationSubCategoryIsValidHierarchy = relationSubCategoryEnum.equals(relationEnum);
+//        	
+//        	if(relationCategoryIsValidHierarchy && relationSubCategoryIsValidHierarchy) {
+//        		isValidHierarchy = true;
+//        	}
+//        } 
+//
+//		return isValidHierarchy;
+//    }
+//    
+//    static HashMap<HashMapKey, Object> getEnumDetails(Relation... relations) {
+//    	// Try to retrieve relation enum
+//    	Optional<Relation> relation = Stream.of(relations).filter(relationElement -> relationElement != null).findFirst();
+//    	
+//    	HashMap<HashMapKey, Object> enumDetailsHashMap = new HashMap<>();
 //    	if(relation.isPresent()) {
 //    		enumDetailsHashMap.put(HashMapKey.RELATION, relation.get());
 //    		enumDetailsHashMap.put(HashMapKey.IS_VALID_RELATION, true);
 //    	} else {
 //    		enumDetailsHashMap.put(HashMapKey.IS_VALID_RELATION, false);
 //    	}
-    	
-    	return enumDetailsHashMap;
-    }
-
+//    	
+//    	return enumDetailsHashMap;
+//    }
+    
 }

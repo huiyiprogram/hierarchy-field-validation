@@ -1,20 +1,50 @@
 package com.example.demo.test;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
-import com.example.demo.relation.Relation;
+import com.example.demo.relation.RelationClass;
+
+import jakarta.validation.Valid;
 
 public class EnumPolymorphismPatternTest {
 
+	@Test
+	public void testAnnotation() {
+		@Valid
+		RelationClass relation = new RelationClass("What", "Immediate", "Parent");
+		System.out.println("Category: " + relation.getCategory());
+		System.out.println("Sub Category: " + relation.getSubCategory());
+		System.out.println("Relation: " + relation.getFinalRelation());
+		assertNotNull(relation);
+	}	
+	
+	@Test
+	public void test() {
+//		ValidatorContext validator = new ValidatorContext(SubCategoryValidator.PERSONAL);
+//		validator.runValidation("RUN VALIDATION content");
+//		System.out.println(validator.getParent());
+//		
+//		ValidatorContext validator2 = new ValidatorContext(SubCategoryValidator.IMMEDIATE);
+//		validator2.runValidation("RUN TEST VALIDATION content");
+//		System.out.println(validator2.getParent());
+		
+//		validator.setValidator(ValidatorStrategy.YAML);
+//		validator.runValidation("YAML content");
+//
+//		validator.setValidator(ValidatorStrategy.JSON);
+//		validator.runValidation("JSON content");
+	}
+	
     @Test
     public void shouldReturnIsValidRelationHierarchy() {
-        // Family
-    	// Immediate
-		boolean parent = Relation.isValidRelationHierarchy("Family", "Immediate", "Parent");
-		assertTrue(parent);
+//        // Family
+//    	// Immediate
+//		boolean parent = Relation.isValidRelationHierarchy("Family", "Immediate", "Parent");
+//		assertTrue(parent);
+    	
+    	
 		
 //		boolean child = Relation.isValidRelationHierarchy("Visa", "Infinite", "Final Infinite 2");
 //		assertTrue(child);

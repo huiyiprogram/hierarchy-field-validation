@@ -1,8 +1,6 @@
 package com.example.demo.relation.enums;
 
-import com.example.demo.relation.Relation;
-
-public enum RelationCategory implements Relation {
+public enum RelationCategory {
 	
     FAMILY("Family"),
     PROFESSIONAL("Professional");
@@ -17,10 +15,4 @@ public enum RelationCategory implements Relation {
 		return this.value;
 	}
 
-	@Override
-	public Relation getParent() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 }
