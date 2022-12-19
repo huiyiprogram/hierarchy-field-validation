@@ -8,18 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.example.demo.relation.RelationClass;
+import com.example.demo.enumstrategy.HierarchyValidationService;
+import com.example.demo.enumstrategy.RelationClass;
 
 import jakarta.validation.ConstraintViolationException;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class EnumPolymorphismPatternTest {
+public class EnumStrategyPatternTest {
 	
 	private String string = "category";
 	
 	@Autowired
-    private CategoryValidationService service;
+    private HierarchyValidationService service;
 	
 //	@Test
 //	void whenInputIsInvalid_thenThrowsException() {

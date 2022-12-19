@@ -3,6 +3,8 @@ package com.example.demo.relation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.example.demo.enumstrategy.RelationClass;
+
 import jakarta.validation.Valid;
 
 @Controller

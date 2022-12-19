@@ -1,4 +1,4 @@
-package com.example.demo.relation;
+package com.example.demo.enumstrategy;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.demo.relation;
+package com.example.demo.enumstrategy;
 
 import com.example.demo.relation.enums.RelationMap;
 

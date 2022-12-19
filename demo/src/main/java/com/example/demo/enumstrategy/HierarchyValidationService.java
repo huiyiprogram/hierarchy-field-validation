@@ -1,11 +1,9 @@
-package com.example.demo.test;
+package com.example.demo.enumstrategy;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
-
-import com.example.demo.relation.RelationClass;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -14,11 +12,12 @@ import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 
 @Service
-class CategoryValidationService {
+public
+class HierarchyValidationService {
 
   private Validator validator;
 
-  CategoryValidationService(Validator validator) {
+  HierarchyValidationService(Validator validator) {
     this.validator = validator;
   }
   
@@ -28,7 +27,7 @@ class CategoryValidationService {
 			.collect( Collectors.joining( ", " ) );
 	}
 
-  void validateInputWithInjectedValidator(RelationClass relation) {
+  public void validateInputWithInjectedValidator(RelationClass relation) {
     Set<ConstraintViolation<RelationClass>> violations = validator.validate(relation);
     if (!violations.isEmpty()) {
     	System.out.println("VIOLATIONS " + toString(violations));
