@@ -1,16 +1,19 @@
 package com.example.demo.relation;
 
+import com.example.demo.relation.enums.RelationMap;
+
 @HierarchyValidation.List({ 
 	@HierarchyValidation(
       category = "category", 
       subCategory = "subCategory", 
       child = "finalRelation",
-	  enumBase = "RelationMap",
+	  enumBase = RelationMap.class,
       message = "Invalid Hierarchy Structure!"
     )
 })
 public class RelationClass {
 	
+//	@CategoryValidation
 	private String category;
 	private String subCategory;
 	private String finalRelation;

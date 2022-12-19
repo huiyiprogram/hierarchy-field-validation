@@ -1,5 +1,6 @@
 package com.example.demo.relation;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -17,7 +18,7 @@ public class HierarchyValidator implements ConstraintValidator<HierarchyValidati
     private String category;
     private String subCategory;
     private String child;
-    private String enumBase;
+    private Class<?> enumBase;
 
     public void initialize(HierarchyValidation constraintAnnotation) {
         this.category = constraintAnnotation.category();
@@ -26,32 +27,38 @@ public class HierarchyValidator implements ConstraintValidator<HierarchyValidati
         this.enumBase = constraintAnnotation.enumBase();
     }
 
+    @Override
     public boolean isValid(Object value, ConstraintValidatorContext context) {
-
-        Object categoryValue = new BeanWrapperImpl(value)
-        		.getPropertyValue(category);
-        Object subCategoryValue = new BeanWrapperImpl(value)
-        		.getPropertyValue(subCategory);
-        Object childValue = new BeanWrapperImpl(value)
-        		.getPropertyValue(child);
-        Object enumBaseValue = new BeanWrapperImpl(value)
-        		.getPropertyValue(enumBase);
+//    	Class<? extends Object> test = value.getClass();
+    	BeanWrapperImpl annotationObject = new BeanWrapperImpl(value);
+        Object categoryValue = annotationObject.getPropertyValue(category);
+        Object subCategoryValue = annotationObject.getPropertyValue(subCategory);
+        Object childValue = annotationObject.getPropertyValue(child);
        
-        IEnumBase[] enumBaseList = null;
-        switch(enumBaseValue.toString()) {
+        System.out.println("HIERARCHY VALIDATOR - isValid(VALUE.category): " + categoryValue);
+    	System.out.println("HIERARCHY VALIDATOR - isValid(VALUE.subCategory): " + subCategoryValue);
+    	System.out.println("HIERARCHY VALIDATOR - isValid(VALUE.finalRelation): " + childValue);
+    	System.out.println("HIERARCHY VALIDATOR - isValid(VALUE.enumBase): " + enumBase);
+    	System.out.println("enumBase.getName(): " + enumBase.getSimpleName());
+    	
+    	List<IEnumBase> enumBaseList = new ArrayList<IEnumBase>();
+        switch(enumBase.getSimpleName()) {
         	case "RelationMap":
-        		enumBaseList = RelationMap.values();
-        	
+        		enumBaseList = List.of(RelationMap.values());
+        		break;
+        	default:
+        		break;        	
         }
         
         Optional<IEnumBase> filteredEnumBaseMap = null;
-        filteredEnumBaseMap = Stream.of(List.of(enumBaseList))
+        filteredEnumBaseMap = Stream.of(enumBaseList)
 	        .flatMap(List::stream)
-	        .filter(child -> child.getCategory().equals(categoryValue.toString()) &&
-	        					child.getSubCategory().equals(subCategoryValue.toString()) &&
-    							child.getChild().equals(childValue.toString()))
+	        .filter(enumVar -> enumVar.getCategory().equals(categoryValue) && 
+	        				   enumVar.getSubCategory().equals(subCategoryValue) && 
+	        				   enumVar.getChild().equals(childValue))
 	        .findFirst();
         
         return filteredEnumBaseMap.isPresent();
     }
+    
 }

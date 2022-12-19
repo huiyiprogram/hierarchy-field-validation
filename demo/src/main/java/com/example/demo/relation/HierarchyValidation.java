@@ -6,6 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
 
 @Constraint(validatedBy = HierarchyValidator.class)
 @Target({ ElementType.TYPE })
@@ -19,7 +20,11 @@ public @interface HierarchyValidation {
     
     String child();
     
-    String enumBase();
+    Class<?> enumBase();
+    
+    Class<?>[] groups() default { };
+
+    Class<? extends Payload>[] payload() default { };
     
     @Target({ ElementType.TYPE })
     @Retention(RetentionPolicy.RUNTIME)
