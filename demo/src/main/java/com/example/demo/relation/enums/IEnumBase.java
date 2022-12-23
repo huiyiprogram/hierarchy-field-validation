@@ -3,6 +3,10 @@ package com.example.demo.relation.enums;
 import java.util.List;
 
 public interface IEnumBase {
+	
+	enum HierarchyTier {
+		CATEGORY, SUBCATEGORY, CHILD
+	}
 
 	List<IEnumBase> getEnumList();
 
@@ -11,5 +15,7 @@ public interface IEnumBase {
 	Object getSubCategory();
 
 	Object getChild();
+	
+	Object getEnumByValue(HierarchyTier tier, String value);
 	
 }

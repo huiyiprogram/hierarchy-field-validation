@@ -2,12 +2,14 @@ package com.example.demo.enumstrategy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.springframework.beans.BeanWrapperImpl;
 
 import com.example.demo.relation.enums.IEnumBase;
+import com.example.demo.relation.enums.IEnumBase.HierarchyTier;
 import com.example.demo.relation.enums.RelationMap;
 
 import jakarta.validation.ConstraintValidator;
@@ -20,6 +22,7 @@ public class HierarchyValidator implements ConstraintValidator<HierarchyValidati
     private String child;
     private Class<?> enumBase;
 
+    // Get property names of annotation
     public void initialize(HierarchyValidation constraintAnnotation) {
         this.category = constraintAnnotation.category();
         this.subCategory = constraintAnnotation.subCategory();
@@ -29,18 +32,15 @@ public class HierarchyValidator implements ConstraintValidator<HierarchyValidati
 
     @Override
     public boolean isValid(Object value, ConstraintValidatorContext context) {
-//    	Class<? extends Object> test = value.getClass();
     	BeanWrapperImpl annotationObject = new BeanWrapperImpl(value);
         Object categoryValue = annotationObject.getPropertyValue(category);
         Object subCategoryValue = annotationObject.getPropertyValue(subCategory);
         Object childValue = annotationObject.getPropertyValue(child);
+        
+        if(Objects.isNull(categoryValue) || Objects.isNull(subCategoryValue) || Objects.isNull(childValue)) {
+        	return false;
+        }
        
-        System.out.println("HIERARCHY VALIDATOR - isValid(VALUE.category): " + categoryValue);
-    	System.out.println("HIERARCHY VALIDATOR - isValid(VALUE.subCategory): " + subCategoryValue);
-    	System.out.println("HIERARCHY VALIDATOR - isValid(VALUE.finalRelation): " + childValue);
-    	System.out.println("HIERARCHY VALIDATOR - isValid(VALUE.enumBase): " + enumBase);
-    	System.out.println("enumBase.getName(): " + enumBase.getSimpleName());
-    	
     	List<IEnumBase> enumBaseList = new ArrayList<IEnumBase>();
         switch(enumBase.getSimpleName()) {
         	case "RelationMap":
@@ -53,9 +53,9 @@ public class HierarchyValidator implements ConstraintValidator<HierarchyValidati
         Optional<IEnumBase> filteredEnumBaseMap = null;
         filteredEnumBaseMap = Stream.of(enumBaseList)
 	        .flatMap(List::stream)
-	        .filter(enumVar -> enumVar.getCategory().equals(categoryValue) && 
-	        				   enumVar.getSubCategory().equals(subCategoryValue) && 
-	        				   enumVar.getChild().equals(childValue))
+	        .filter(enumVar -> enumVar.getCategory().equals(enumVar.getEnumByValue(HierarchyTier.CATEGORY, categoryValue.toString())) && 
+	        				   enumVar.getSubCategory().equals(enumVar.getEnumByValue(HierarchyTier.SUBCATEGORY, subCategoryValue.toString())) && 
+	        				   enumVar.getChild().equals(enumVar.getEnumByValue(HierarchyTier.CHILD, childValue.toString())))
 	        .findFirst();
         
         return filteredEnumBaseMap.isPresent();
