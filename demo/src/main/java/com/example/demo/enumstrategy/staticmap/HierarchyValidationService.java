@@ -1,8 +1,10 @@
-package com.example.demo.enumstrategy;
+package com.example.demo.enumstrategy.staticmap;
 
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
+
+import com.example.demo.common.enums.RelationDTO;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -20,8 +22,8 @@ class HierarchyValidationService {
     this.validator = validator;
   }
 
-  public void validateInputWithInjectedValidator(RelationClass relation) {
-    Set<ConstraintViolation<RelationClass>> violations = validator.validate(relation);
+  public void validateInputWithInjectedValidator(RelationDTO relation) {
+    Set<ConstraintViolation<RelationDTO>> violations = validator.validate(relation);
     if (!violations.isEmpty()) {
       throw new ConstraintViolationException(violations);
     }

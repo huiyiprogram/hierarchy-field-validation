@@ -1,18 +1,18 @@
-package com.example.demo.relation.enums;
+package com.example.demo.enumpolymorphism;
 
-public enum RelationCategory {
+public enum CategoryRelation {
 	
     FAMILY("Family"),
     PROFESSIONAL("Professional");
     
     private String value;
 	
-    RelationCategory(String value) {
+    CategoryRelation(String value) {
         this.value = value;
     }
     
 	public String getValue() {
 		return this.value;
 	}
-
+	
 }

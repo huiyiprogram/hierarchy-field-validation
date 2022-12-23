@@ -1,4 +1,4 @@
-package com.example.demo.enumstrategy;
+package com.example.demo.enumstrategy.staticmap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,9 +8,9 @@ import java.util.stream.Stream;
 
 import org.springframework.beans.BeanWrapperImpl;
 
-import com.example.demo.relation.enums.IEnumBase;
-import com.example.demo.relation.enums.IEnumBase.HierarchyTier;
-import com.example.demo.relation.enums.RelationMap;
+import com.example.demo.common.enums.IEnumBase;
+import com.example.demo.common.enums.IEnumBase.HierarchyTier;
+import com.example.demo.common.enums.IEnumBase.HierarchyValidationStrategy;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -21,6 +21,7 @@ public class HierarchyValidator implements ConstraintValidator<HierarchyValidati
     private String subCategory;
     private String child;
     private Class<?> enumBase;
+    private HierarchyValidationStrategy strategy;
 
     // Get property names of annotation
     public void initialize(HierarchyValidation constraintAnnotation) {
@@ -28,10 +29,22 @@ public class HierarchyValidator implements ConstraintValidator<HierarchyValidati
         this.subCategory = constraintAnnotation.subCategory();
         this.child = constraintAnnotation.child();
         this.enumBase = constraintAnnotation.enumBase();
+        this.strategy = constraintAnnotation.strategy();
     }
 
     @Override
     public boolean isValid(Object value, ConstraintValidatorContext context) {
+    	switch(strategy) {
+    	case ENUM_STRATEGY_STATICMAP:
+    		return enumStrategyAndStaticMap(value);
+    	default:
+    		break;
+    	}
+    	
+    	return false;
+    }
+    
+    private boolean enumStrategyAndStaticMap(Object value) {
     	BeanWrapperImpl annotationObject = new BeanWrapperImpl(value);
         Object categoryValue = annotationObject.getPropertyValue(category);
         Object subCategoryValue = annotationObject.getPropertyValue(subCategory);

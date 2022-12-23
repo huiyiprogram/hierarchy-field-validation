@@ -1,8 +1,14 @@
-package com.example.demo.relation.enums;
+package com.example.demo.enumstrategy.staticmap;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
+
+import com.example.demo.common.enums.IEnumBase;
+import com.example.demo.common.enums.Relation;
+import com.example.demo.common.enums.RelationCategory;
+import com.example.demo.common.enums.RelationSubCategory;
+import com.example.demo.common.enums.IEnumBase.HierarchyTier;
 
 // ** Validator that holds the hierarchy mapping of
 // ** Relation Category > Relation Sub Category > Relation

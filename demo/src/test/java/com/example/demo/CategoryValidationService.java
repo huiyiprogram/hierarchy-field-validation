@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.enumstrategy.RelationClass;
+import com.example.demo.common.enums.RelationDTO;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -29,8 +29,8 @@ class CategoryValidationService {
 			.collect( Collectors.joining( ", " ) );
 	}
 
-  void validateInputWithInjectedValidator(RelationClass relation) {
-    Set<ConstraintViolation<RelationClass>> violations = validator.validate(relation);
+  void validateInputWithInjectedValidator(RelationDTO relation) {
+    Set<ConstraintViolation<RelationDTO>> violations = validator.validate(relation);
     if (!violations.isEmpty()) {
     	System.out.println("VIOLATIONS " + toString(violations));
       throw new ConstraintViolationException(violations);

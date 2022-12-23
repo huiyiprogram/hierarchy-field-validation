@@ -1,4 +1,4 @@
-package com.example.demo.relation.enums;
+package com.example.demo.common.enums;
 
 //@Documented
 //@Constraint(validatedBy = ContactNumberValidator.class)

@@ -1,4 +1,4 @@
-package com.example.demo.relation.enums;
+package com.example.demo.common.enums;
 
 public class HierarchyValidatorImpl implements IHierarchyValidator {
 //implements 

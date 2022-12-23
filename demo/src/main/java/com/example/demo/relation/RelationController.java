@@ -3,7 +3,7 @@ package com.example.demo.relation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.demo.enumstrategy.RelationClass;
+import com.example.demo.common.enums.RelationDTO;
 
 import jakarta.validation.Valid;
 
@@ -13,7 +13,7 @@ public class RelationController {
     @PostMapping("/user")
     public boolean createRelationClass(String category, String subCategory, String relationValue) {
     	@Valid 
-    	RelationClass relation = new RelationClass(category, subCategory, relationValue);
+    	RelationDTO relation = new RelationDTO(category, subCategory, relationValue);
         return relation != null;
     }
 }

@@ -1,6 +1,9 @@
-package com.example.demo.enumstrategy;
+package com.example.demo.common.enums;
 
-import com.example.demo.relation.enums.RelationMap;
+import com.example.demo.common.enums.IEnumBase.HierarchyValidationStrategy;
+import com.example.demo.enumstrategy.staticmap.HierarchyValidation;
+import com.example.demo.enumstrategy.staticmap.RelationMap;
+import com.example.demo.enumstrategy.staticmap.HierarchyValidation.List;
 
 @HierarchyValidation.List({ 
 	@HierarchyValidation(
@@ -8,16 +11,17 @@ import com.example.demo.relation.enums.RelationMap;
 		subCategory = "subCategory", 
 		child = "finalRelation",
 		enumBase = RelationMap.class,
-		message = "Invalid Relation Hierarchy Structure!"
+		message = "Invalid Relation Hierarchy Structure!",
+		strategy = HierarchyValidationStrategy.ENUM_POLYMORPHISM
     )
 })
-public class RelationClass {
+public class RelationDTO {
 	
 	private String category;
 	private String subCategory;
 	private String finalRelation;
 
-	public RelationClass(String category, String subCategory, String finalRelation) {
+	public RelationDTO(String category, String subCategory, String finalRelation) {
 		this.category = category;
 		this.subCategory = subCategory;
 		this.finalRelation = finalRelation;

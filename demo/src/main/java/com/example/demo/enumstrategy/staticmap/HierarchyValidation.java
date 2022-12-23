@@ -1,9 +1,11 @@
-package com.example.demo.enumstrategy;
+package com.example.demo.enumstrategy.staticmap;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import com.example.demo.common.enums.IEnumBase.HierarchyValidationStrategy;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -21,6 +23,8 @@ public @interface HierarchyValidation {
     String child();
     
     Class<?> enumBase();
+    
+    HierarchyValidationStrategy strategy();
     
     Class<?>[] groups() default { };
 

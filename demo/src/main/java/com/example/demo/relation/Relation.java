@@ -1,7 +1,7 @@
 package com.example.demo.relation;
 
-import com.example.demo.relation.enums.RelationCategory;
-import com.example.demo.relation.enums.RelationSubCategory;
+import com.example.demo.common.enums.RelationCategory;
+import com.example.demo.common.enums.RelationSubCategory;
 
 //import java.util.HashMap;
 //import java.util.Optional;

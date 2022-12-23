@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.example.demo.enumstrategy.HierarchyValidationService;
-import com.example.demo.enumstrategy.RelationClass;
+import com.example.demo.common.enums.RelationDTO;
+import com.example.demo.enumstrategy.staticmap.HierarchyValidationService;
 
 import jakarta.validation.ConstraintViolationException;
 
@@ -22,31 +22,31 @@ public class EnumStrategyPatternTest {
 	// Family > Immediate
 	@Test
 	void testFamilyImmediateParent_thenDoNotThrowsException() {
-		RelationClass input = new RelationClass("Family", "Immediate", "Parent");
+		RelationDTO input = new RelationDTO("Family", "Immediate", "Parent");
 		assertDoesNotThrow(() -> service.validateInputWithInjectedValidator(input));
 	}
 	
 	@Test
 	void testFamilyImmediateChild_thenDoNotThrowsException() {
-		RelationClass input = new RelationClass("Family", "Immediate", "Child");
+		RelationDTO input = new RelationDTO("Family", "Immediate", "Child");
 		assertDoesNotThrow(() -> service.validateInputWithInjectedValidator(input));
 	}
 	
 	@Test
 	void testFamilyImmediateSpouse_thenDoNotThrowsException() {
-		RelationClass input = new RelationClass("Family", "Immediate", "Spouse");
+		RelationDTO input = new RelationDTO("Family", "Immediate", "Spouse");
 		assertDoesNotThrow(() -> service.validateInputWithInjectedValidator(input));
 	}
 	
 	@Test
 	void testFamilyImmediateSibling_thenDoNotThrowsException() {
-		RelationClass input = new RelationClass("Family", "Immediate", "Sibling");
+		RelationDTO input = new RelationDTO("Family", "Immediate", "Sibling");
 		assertDoesNotThrow(() -> service.validateInputWithInjectedValidator(input));
 	}
 
 	@Test
 	void testFamilyImmediate_thenThrowsException() {
-		RelationClass input = new RelationClass("Family", "Immediate", "Test");
+		RelationDTO input = new RelationDTO("Family", "Immediate", "Test");
 		assertThrows(ConstraintViolationException.class, () -> {
 			service.validateInputWithInjectedValidator(input);
 	    });
@@ -55,25 +55,25 @@ public class EnumStrategyPatternTest {
 	// Family > Extended
 	@Test
 	void testFamilyExtendedGrandparent_thenDoNotThrowsException() {
-		RelationClass input = new RelationClass("Family", "Extended", "Grandparent");
+		RelationDTO input = new RelationDTO("Family", "Extended", "Grandparent");
 		assertDoesNotThrow(() -> service.validateInputWithInjectedValidator(input));
 	}
 	
 	@Test
 	void testFamilyExtendedCousin_thenDoNotThrowsException() {
-		RelationClass input = new RelationClass("Family", "Extended", "Cousin");
+		RelationDTO input = new RelationDTO("Family", "Extended", "Cousin");
 		assertDoesNotThrow(() -> service.validateInputWithInjectedValidator(input));
 	}
 	
 	@Test
 	void testFamilyExtendedUncle_thenDoNotThrowsException() {
-		RelationClass input = new RelationClass("Family", "Extended", "Uncle");
+		RelationDTO input = new RelationDTO("Family", "Extended", "Uncle");
 		assertDoesNotThrow(() -> service.validateInputWithInjectedValidator(input));
 	}
 	
 	@Test
 	void testFamilyExtended_thenThrowsException() {
-		RelationClass input = new RelationClass("Family", "Extended", "Test");
+		RelationDTO input = new RelationDTO("Family", "Extended", "Test");
 		assertThrows(ConstraintViolationException.class, () -> {
 			service.validateInputWithInjectedValidator(input);
 	    });
@@ -82,7 +82,7 @@ public class EnumStrategyPatternTest {
 	// Family
 	@Test
 	void testFamily_thenThrowsException() {
-		RelationClass input = new RelationClass("Family", "Test1", "Test2");
+		RelationDTO input = new RelationDTO("Family", "Test1", "Test2");
 		assertThrows(ConstraintViolationException.class, () -> {
 			service.validateInputWithInjectedValidator(input);
 	    });
@@ -91,19 +91,19 @@ public class EnumStrategyPatternTest {
 	// Professional > Work
 	@Test
 	void testProfessionalWorkSuperior_thenDoNotThrowsException() {
-		RelationClass input = new RelationClass("Professional", "Work", "Superior");
+		RelationDTO input = new RelationDTO("Professional", "Work", "Superior");
 		assertDoesNotThrow(() -> service.validateInputWithInjectedValidator(input));
 	}
 	
 	@Test
 	void testProfessionalWorkSubordinate_thenDoNotThrowsException() {
-		RelationClass input = new RelationClass("Professional", "Work", "Subordinate");
+		RelationDTO input = new RelationDTO("Professional", "Work", "Subordinate");
 		assertDoesNotThrow(() -> service.validateInputWithInjectedValidator(input));
 	}
 	
 	@Test
 	void testProfessionalWork_thenThrowsException() {
-		RelationClass input = new RelationClass("Professional", "Work", "Test");
+		RelationDTO input = new RelationDTO("Professional", "Work", "Test");
 		assertThrows(ConstraintViolationException.class, () -> {
 			service.validateInputWithInjectedValidator(input);
 	    });
@@ -112,19 +112,19 @@ public class EnumStrategyPatternTest {
 	// Professional > Personal
 	@Test
 	void testProfessionalPersonalDriver_thenDoNotThrowsException() {
-		RelationClass input = new RelationClass("Professional", "Personal", "Driver");
+		RelationDTO input = new RelationDTO("Professional", "Personal", "Driver");
 		assertDoesNotThrow(() -> service.validateInputWithInjectedValidator(input));
 	}
 	
 	@Test
 	void testProfessionalPersonalBodyguard_thenDoNotThrowsException() {
-		RelationClass input = new RelationClass("Professional", "Personal", "Body Guard");
+		RelationDTO input = new RelationDTO("Professional", "Personal", "Body Guard");
 		assertDoesNotThrow(() -> service.validateInputWithInjectedValidator(input));
 	}
 	
 	@Test
 	void testProfessionalPersonal_thenThrowsException() {
-		RelationClass input = new RelationClass("Professional", "Personal", "Test");
+		RelationDTO input = new RelationDTO("Professional", "Personal", "Test");
 		assertThrows(ConstraintViolationException.class, () -> {
 			service.validateInputWithInjectedValidator(input);
 	    });
@@ -133,7 +133,7 @@ public class EnumStrategyPatternTest {
 	// Professional
 	@Test
 	void testProfessional_thenThrowsException() {
-		RelationClass input = new RelationClass("Professional", "Test1", "Test2");
+		RelationDTO input = new RelationDTO("Professional", "Test1", "Test2");
 		assertThrows(ConstraintViolationException.class, () -> {
 			service.validateInputWithInjectedValidator(input);
 	    });
@@ -142,7 +142,7 @@ public class EnumStrategyPatternTest {
 	// All fields invalid values
 	@Test
 	void testAllFieldsInvalidValues_thenThrowsException() {
-		RelationClass input = new RelationClass("Test1", "Test2", "Test3");
+		RelationDTO input = new RelationDTO("Test1", "Test2", "Test3");
 		assertThrows(ConstraintViolationException.class, () -> {
 			service.validateInputWithInjectedValidator(input);
 	    });

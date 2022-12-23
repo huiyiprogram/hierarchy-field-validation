@@ -1,4 +1,4 @@
-package com.example.demo.relation.enums;
+package com.example.demo.common.enums;
 
 public interface IHierarchyValidator {
 	public void hierarchyValidation(String category, String subCategory, String finalValue);
