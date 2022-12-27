@@ -1,4 +1,4 @@
-package com.example.demo.enumstrategy.staticmap;
+package com.example.demo.common.validation;
 
 import java.util.Set;
 

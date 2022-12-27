@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.example.demo.common.enums.RelationDTO;
-import com.example.demo.enumstrategy.staticmap.HierarchyValidationService;
+import com.example.demo.common.validation.HierarchyValidationService;
 
 import jakarta.validation.ConstraintViolationException;
 

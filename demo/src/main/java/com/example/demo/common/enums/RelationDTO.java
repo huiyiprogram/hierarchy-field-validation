@@ -1,9 +1,9 @@
 package com.example.demo.common.enums;
 
 import com.example.demo.common.enums.IEnumBase.HierarchyValidationStrategy;
-import com.example.demo.enumstrategy.staticmap.HierarchyValidation;
+import com.example.demo.common.validation.HierarchyValidation;
+import com.example.demo.common.validation.HierarchyValidation.List;
 import com.example.demo.enumstrategy.staticmap.RelationMap;
-import com.example.demo.enumstrategy.staticmap.HierarchyValidation.List;
 
 @HierarchyValidation.List({ 
 	@HierarchyValidation(

@@ -1,4 +1,4 @@
-package com.example.demo.enumstrategy.staticmap;
+package com.example.demo.common.validation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

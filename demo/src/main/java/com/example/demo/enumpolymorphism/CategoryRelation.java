@@ -1,6 +1,6 @@
 package com.example.demo.enumpolymorphism;
 
-public enum CategoryRelation {
+public enum CategoryRelation implements RelationInterface {
 	
     FAMILY("Family"),
     PROFESSIONAL("Professional");
@@ -14,5 +14,17 @@ public enum CategoryRelation {
 	public String getValue() {
 		return this.value;
 	}
-	
+
+	@Override
+	public CategoryRelation getCategory() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public RelationInterface getSubCategory() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

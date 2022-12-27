@@ -14,9 +14,16 @@ public enum SubCategoryProfessional implements RelationInterface {
     public String getValue() {
 		return this.value;
 	}
-
+    
+    @Override
+   	public CategoryRelation getCategory() {
+   		return CategoryRelation.PROFESSIONAL;
+   	}
+    
 	@Override
-	public CategoryRelation getCategoryRelation() {
-		return CategoryRelation.PROFESSIONAL;
+	public RelationInterface getSubCategory() {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
 }
