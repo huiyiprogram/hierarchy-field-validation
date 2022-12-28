@@ -14,7 +14,7 @@ import jakarta.validation.ConstraintViolationException;
 
 //@ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class EnumStrategyPatternTest {
+public class AnnotationTest {
 	
 	@Autowired
     private HierarchyValidationService service;

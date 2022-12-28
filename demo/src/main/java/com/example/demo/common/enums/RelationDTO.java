@@ -1,18 +1,19 @@
 package com.example.demo.common.enums;
 
-import com.example.demo.common.enums.IEnumBase.HierarchyValidationStrategy;
+import com.example.demo.common.enums.IHierarchyEnumBase.HierarchyValidationStrategy;
 import com.example.demo.common.validation.HierarchyValidation;
-import com.example.demo.common.validation.HierarchyValidation.List;
-import com.example.demo.enumstrategy.staticmap.RelationMap;
+import com.example.demo.enumadvanced.RelationChildAdvanced;
 
+
+// Change validationEnum(Which enum to check against), strategy according to preference
 @HierarchyValidation.List({ 
 	@HierarchyValidation(
 		category = "category", 
 		subCategory = "subCategory", 
 		child = "finalRelation",
-		enumBase = RelationMap.class,
-		message = "Invalid Relation Hierarchy Structure!",
-		strategy = HierarchyValidationStrategy.ENUM_POLYMORPHISM
+		validationEnum = RelationChildAdvanced.class,
+		strategy = HierarchyValidationStrategy.ENUM_STRATEGY_PATTERN,
+		message = "Invalid Relation Hierarchy Structure!"
     )
 })
 public class RelationDTO {

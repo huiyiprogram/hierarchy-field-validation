@@ -1,18 +1,17 @@
-package com.example.demo.enumstrategy.staticmap;
+package com.example.demo.enumstrategy_staticmap;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import com.example.demo.common.enums.IEnumBase;
+import com.example.demo.common.enums.IHierarchyEnumBase;
 import com.example.demo.common.enums.Relation;
 import com.example.demo.common.enums.RelationCategory;
 import com.example.demo.common.enums.RelationSubCategory;
-import com.example.demo.common.enums.IEnumBase.HierarchyTier;
 
 // ** Validator that holds the hierarchy mapping of
 // ** Relation Category > Relation Sub Category > Relation
-public enum RelationMap implements IEnumBase {
+public enum RelationMap implements IHierarchyEnumBase {
 	
 	// Family > Immediate
 	FAM_IMM_PARENT(RelationCategory.FAMILY, RelationSubCategory.IMMEDIATE, Relation.PARENT),
@@ -68,8 +67,8 @@ public enum RelationMap implements IEnumBase {
     }
 
 	@Override
-	public List<IEnumBase> getEnumList() {
-		List<IEnumBase> enumBaseList = List.of(RelationMap.values());
+	public List<IHierarchyEnumBase> getEnumList() {
+		List<IHierarchyEnumBase> enumBaseList = List.of(RelationMap.values());
 		return enumBaseList;
 	}
 
@@ -112,5 +111,5 @@ public enum RelationMap implements IEnumBase {
 		
 		return null;
 	}
-    
+
 }

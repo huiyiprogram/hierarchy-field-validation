@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.example.demo.common.enums.IEnumBase.HierarchyValidationStrategy;
+import com.example.demo.common.enums.IHierarchyEnumBase.HierarchyValidationStrategy;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -22,7 +22,7 @@ public @interface HierarchyValidation {
     
     String child();
     
-    Class<?> enumBase();
+    Class<?> validationEnum();
     
     HierarchyValidationStrategy strategy();
     

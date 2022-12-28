@@ -8,11 +8,13 @@ import java.util.stream.Stream;
 
 import org.springframework.beans.BeanWrapperImpl;
 
-import com.example.demo.common.enums.IEnumBase;
-import com.example.demo.common.enums.IEnumBase.HierarchyTier;
-import com.example.demo.common.enums.IEnumBase.HierarchyValidationStrategy;
+import com.example.demo.common.enums.IHierarchyEnumBase;
+import com.example.demo.common.enums.IHierarchyEnumBase.HierarchyTier;
+import com.example.demo.common.enums.IHierarchyEnumBase.HierarchyValidationStrategy;
+import com.example.demo.enumadvanced.RelationChildAdvanced;
+import com.example.demo.enumadvanced.IEnumBaseAdvanced;
 import com.example.demo.enumpolymorphism.RelationInterface;
-import com.example.demo.enumstrategy.staticmap.RelationMap;
+import com.example.demo.enumstrategy_staticmap.RelationMap;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -22,15 +24,19 @@ public class HierarchyValidator implements ConstraintValidator<HierarchyValidati
     private String category;
     private String subCategory;
     private String child;
-    private Class<?> enumBase;
+    private Class<?> validationEnum;
     private HierarchyValidationStrategy strategy;
+    
+    private String categoryStr;
+    private String subCategoryStr;
+    private String childStr;
 
     // Get property names of annotation
     public void initialize(HierarchyValidation constraintAnnotation) {
         this.category = constraintAnnotation.category();
         this.subCategory = constraintAnnotation.subCategory();
         this.child = constraintAnnotation.child();
-        this.enumBase = constraintAnnotation.enumBase();
+        this.validationEnum = constraintAnnotation.validationEnum();
         this.strategy = constraintAnnotation.strategy();
     }
 
@@ -46,15 +52,17 @@ public class HierarchyValidator implements ConstraintValidator<HierarchyValidati
         	return false;
         }
         
-        String categoryStr = categoryValue.toString();
-        String subCategoryStr = subCategoryValue.toString();
-        String childStr = childValue.toString();
+        this.categoryStr = categoryValue.toString();
+        this.subCategoryStr = subCategoryValue.toString();
+        this.childStr = childValue.toString();
         
     	switch(strategy) {
     	case ENUM_STRATEGY_STATICMAP:
-    		return enumStrategyAndStaticMap(categoryStr, subCategoryStr, childStr);
+    		return enumStrategyAndStaticMap();
     	case ENUM_POLYMORPHISM:
-    		return enumPolymorphism(categoryStr, subCategoryStr, childStr);
+    		return enumPolymorphism();
+    	case ENUM_STRATEGY_PATTERN:
+    		return enumStrategyPattern();
     	default:
     		break;
     	}
@@ -62,9 +70,35 @@ public class HierarchyValidator implements ConstraintValidator<HierarchyValidati
     	return false;
     }
     
-    private boolean enumStrategyAndStaticMap(String categoryStr, String subCategoryStr, String childStr) {
-    	List<IEnumBase> enumBaseList = new ArrayList<IEnumBase>();
-        switch(enumBase.getSimpleName()) {
+    private boolean enumStrategyPattern() {
+    	
+    	List<IEnumBaseAdvanced> enumBaseList = new ArrayList<IEnumBaseAdvanced>();
+        switch(validationEnum.getSimpleName()) {
+        	case "ChildAdvanced":
+        		enumBaseList = List.of(RelationChildAdvanced.values());
+        		break;
+        	default:
+        		break;        	
+        }
+        
+         Optional<IEnumBaseAdvanced> childEnum = Stream.of(enumBaseList)
+	        .flatMap(List::stream)
+	        .filter(enumVar -> enumVar.getValue() == childStr)
+	        .findFirst();
+         
+         if(childEnum.isPresent() && 
+        		 childEnum.get().getCategory().equals(categoryStr) &&
+        		 childEnum.get().getSubCategory().equals(subCategoryStr)) {
+        	 return true;
+         }
+        
+		return false;
+    }
+    
+    private boolean enumStrategyAndStaticMap() {
+    	
+    	List<IHierarchyEnumBase> enumBaseList = new ArrayList<IHierarchyEnumBase>();
+        switch(validationEnum.getSimpleName()) {
         	case "RelationMap":
         		enumBaseList = List.of(RelationMap.values());
         		break;
@@ -72,7 +106,7 @@ public class HierarchyValidator implements ConstraintValidator<HierarchyValidati
         		break;        	
         }
         
-        Optional<IEnumBase> filteredEnumBaseMap = null;
+        Optional<IHierarchyEnumBase> filteredEnumBaseMap = null;
         filteredEnumBaseMap = Stream.of(enumBaseList)
 	        .flatMap(List::stream)
 	        .filter(enumVar -> enumVar.getCategory().equals(enumVar.getEnumByValue(HierarchyTier.CATEGORY, categoryStr)) && 
@@ -83,7 +117,7 @@ public class HierarchyValidator implements ConstraintValidator<HierarchyValidati
         return filteredEnumBaseMap.isPresent();
     }
     
-    private boolean enumPolymorphism(String categoryStr, String subCategoryStr, String childStr) {
+    private boolean enumPolymorphism() {
     	Optional<RelationInterface> category = RelationInterface.fromCategoryValue(categoryStr);
     	Optional<RelationInterface> subCategory = RelationInterface.fromCategoryValue(subCategoryStr);
     	Optional<RelationInterface> child = RelationInterface.fromCategoryValue(childStr);
@@ -93,6 +127,10 @@ public class HierarchyValidator implements ConstraintValidator<HierarchyValidati
     	}
     	
     	// Compare parents if they are equivalent to the inputs
+    	if(child.get().getCategory().equals(category.get()) &&
+    	   child.get().getSubCategory().equals(subCategory.get())) {
+    		return true;
+    	}
     	
     	return false;
     }
