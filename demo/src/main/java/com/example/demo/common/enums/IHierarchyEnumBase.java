@@ -10,7 +10,8 @@ public interface IHierarchyEnumBase {
 	}
 	
 	enum HierarchyValidationStrategy {
-		ENUM_POLYMORPHISM, ENUM_STRATEGY_PATTERN, ENUM_STRATEGY_STATICMAP
+		ENUM_POLYMORPHISM, ENUM_STRATEGY_PATTERN, ENUM_STRATEGY_STATICMAP,
+		TREE_STRUCTURE_PARENT_REF
 	}
 
 	List<IHierarchyEnumBase> getEnumList();

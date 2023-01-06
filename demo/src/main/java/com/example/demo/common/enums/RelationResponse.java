@@ -16,13 +16,13 @@ import com.example.demo.enumadvanced.RelationChildAdvanced;
 		message = "Invalid Relation Hierarchy Structure!"
     )
 })
-public class RelationDTO {
+public class RelationResponse {
 	
 	private String category;
 	private String subCategory;
 	private String finalRelation;
 
-	public RelationDTO(String category, String subCategory, String finalRelation) {
+	public RelationResponse(String category, String subCategory, String finalRelation) {
 		this.category = category;
 		this.subCategory = subCategory;
 		this.finalRelation = finalRelation;

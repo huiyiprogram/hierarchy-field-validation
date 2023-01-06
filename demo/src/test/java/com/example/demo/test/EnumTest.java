@@ -14,20 +14,20 @@ import com.example.demo.enumpolymorphism.SubCategoryProfessional;
 
 public class EnumTest {
 	
+	// Enum Polymorphism
 	@Test
     public void testValidCategoryFromCategoryRelation() {
 
         // Family
-        boolean allFamily = RelationInterface.fromCategoryValue("Family").stream()
-                .allMatch(subCategory -> subCategory.getCategory().equals(CategoryRelation.FAMILY));
-        assertTrue(allFamily);
+        RelationInterface family = RelationInterface.fromCategoryValue("Family").orElse(null);
+        assertEquals(CategoryRelation.FAMILY, family);
         
         // Professional
-        boolean allProfessional = RelationInterface.fromCategoryValue("Professional").stream()
-                .allMatch(subCategory -> subCategory.getCategory().equals(CategoryRelation.PROFESSIONAL));
-        assertTrue(allProfessional);
+        RelationInterface professional = RelationInterface.fromCategoryValue("Professional").orElse(null);
+        assertEquals(CategoryRelation.PROFESSIONAL, professional);
 	 }
 	
+	// Enum Polymorphism
 	@Test
     public void testValidSubCategoryRelationFromValue() {
         // Family
@@ -45,6 +45,7 @@ public class EnumTest {
         assertEquals(SubCategoryProfessional.PERSONAL, professionalPersonal);
 	}
 	
+	// Enum Polymorphism
 	@Test
     public void testValidRelationFromValue() {
 		
@@ -86,6 +87,7 @@ public class EnumTest {
         assertEquals(Relation.SUBORDINATE, subordinate);
 	}
 	
+	// Enum Polymorphism
 	@Test
     public void testInvalidValue() {
 		// Category

@@ -7,12 +7,14 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.demo.common.enums.IHierarchyEnumBase;
 import com.example.demo.common.enums.IHierarchyEnumBase.HierarchyTier;
 import com.example.demo.common.enums.IHierarchyEnumBase.HierarchyValidationStrategy;
-import com.example.demo.enumadvanced.RelationChildAdvanced;
+import com.example.demo.common.enums.RelationHierarchy;
 import com.example.demo.enumadvanced.IEnumBaseAdvanced;
+import com.example.demo.enumadvanced.RelationChildAdvanced;
 import com.example.demo.enumpolymorphism.RelationInterface;
 import com.example.demo.enumstrategy_staticmap.RelationMap;
 
@@ -30,6 +32,9 @@ public class HierarchyValidator implements ConstraintValidator<HierarchyValidati
     private String categoryStr;
     private String subCategoryStr;
     private String childStr;
+    
+    @Autowired
+	RelationHierarchyRepository relationHierarchyRepository;
 
     // Get property names of annotation
     public void initialize(HierarchyValidation constraintAnnotation) {
@@ -63,6 +68,8 @@ public class HierarchyValidator implements ConstraintValidator<HierarchyValidati
     		return enumPolymorphism();
     	case ENUM_STRATEGY_PATTERN:
     		return enumStrategyPattern();
+    	case TREE_STRUCTURE_PARENT_REF:
+    		return treeStructureParentRef();
     	default:
     		break;
     	}
@@ -132,6 +139,12 @@ public class HierarchyValidator implements ConstraintValidator<HierarchyValidati
     		return true;
     	}
     	
+    	return false;
+    }
+    
+    private boolean treeStructureParentRef() {
+    	Optional<RelationHierarchy> relationHierarchy = relationHierarchyRepository.findById(childStr);
+    	System.out.println("RELATION HIERARCHY: " + relationHierarchy);
     	return false;
     }
     
