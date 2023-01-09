@@ -11,6 +11,7 @@ import com.example.demo.common.enums.RelationHierarchy;
 @Repository
 public interface RelationHierarchyRepository extends MongoRepository<RelationHierarchy, String> {
 	
-	@Query("{_id: ?0}")
+	@Query("{\"_id\": ?0}")
 	public Optional<RelationHierarchy> findById(String id);
+	
 }

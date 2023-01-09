@@ -22,7 +22,7 @@ public @interface HierarchyValidation {
     
     String child();
     
-    Class<?> validationEnum();
+    Class<?> enumValidation();
     
     HierarchyValidationStrategy strategy();
     

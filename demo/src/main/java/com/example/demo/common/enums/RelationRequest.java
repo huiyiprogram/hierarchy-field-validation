@@ -11,7 +11,7 @@ import com.example.demo.enumadvanced.RelationChildAdvanced;
 		category = "category", 
 		subCategory = "subCategory", 
 		child = "finalRelation",
-		validationEnum = RelationChildAdvanced.class,
+		enumValidation = RelationChildAdvanced.class,
 		strategy = HierarchyValidationStrategy.TREE_STRUCTURE_PARENT_REF,
 		message = "Invalid Relation Hierarchy Structure!"
     )

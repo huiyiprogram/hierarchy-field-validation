@@ -26,12 +26,13 @@ public class HierarchyValidator implements ConstraintValidator<HierarchyValidati
     private String category;
     private String subCategory;
     private String child;
-    private Class<?> validationEnum;
+    private Class<?> enumValidation;
     private HierarchyValidationStrategy strategy;
     
     private String categoryStr;
     private String subCategoryStr;
     private String childStr;
+    private String enumValidationName;
     
     @Autowired
 	RelationHierarchyRepository relationHierarchyRepository;
@@ -41,7 +42,7 @@ public class HierarchyValidator implements ConstraintValidator<HierarchyValidati
         this.category = constraintAnnotation.category();
         this.subCategory = constraintAnnotation.subCategory();
         this.child = constraintAnnotation.child();
-        this.validationEnum = constraintAnnotation.validationEnum();
+        this.enumValidation = constraintAnnotation.enumValidation();
         this.strategy = constraintAnnotation.strategy();
     }
 
@@ -60,6 +61,7 @@ public class HierarchyValidator implements ConstraintValidator<HierarchyValidati
         this.categoryStr = categoryValue.toString();
         this.subCategoryStr = subCategoryValue.toString();
         this.childStr = childValue.toString();
+        this.enumValidationName =  enumValidation.getSimpleName();
         
     	switch(strategy) {
     	case ENUM_STRATEGY_STATICMAP:
@@ -80,8 +82,8 @@ public class HierarchyValidator implements ConstraintValidator<HierarchyValidati
     private boolean enumStrategyPattern() {
     	
     	List<IEnumBaseAdvanced> enumBaseList = new ArrayList<IEnumBaseAdvanced>();
-        switch(validationEnum.getSimpleName()) {
-        	case "ChildAdvanced":
+        switch(enumValidationName) {
+        	case "RelationChildAdvanced":
         		enumBaseList = List.of(RelationChildAdvanced.values());
         		break;
         	default:
@@ -90,12 +92,12 @@ public class HierarchyValidator implements ConstraintValidator<HierarchyValidati
         
          Optional<IEnumBaseAdvanced> childEnum = Stream.of(enumBaseList)
 	        .flatMap(List::stream)
-	        .filter(enumVar -> enumVar.getValue() == childStr)
+	        .filter(enumVar -> enumVar.getValue().equals(this.childStr))
 	        .findFirst();
          
          if(childEnum.isPresent() && 
-        		 childEnum.get().getCategory().equals(categoryStr) &&
-        		 childEnum.get().getSubCategory().equals(subCategoryStr)) {
+    		childEnum.get().getCategory().equals(categoryStr) &&
+    		childEnum.get().getSubCategory().equals(subCategoryStr)) {
         	 return true;
          }
         
@@ -105,7 +107,7 @@ public class HierarchyValidator implements ConstraintValidator<HierarchyValidati
     private boolean enumStrategyAndStaticMap() {
     	
     	List<IHierarchyEnumBase> enumBaseList = new ArrayList<IHierarchyEnumBase>();
-        switch(validationEnum.getSimpleName()) {
+        switch(enumValidationName) {
         	case "RelationMap":
         		enumBaseList = List.of(RelationMap.values());
         		break;
@@ -143,9 +145,29 @@ public class HierarchyValidator implements ConstraintValidator<HierarchyValidati
     }
     
     private boolean treeStructureParentRef() {
-    	Optional<RelationHierarchy> relationHierarchy = relationHierarchyRepository.findById(childStr);
-    	System.out.println("RELATION HIERARCHY: " + relationHierarchy);
-    	return false;
+    	String childRelationParent = null;
+    	String subCategoryRelationParent = null;
+    	
+    	// Verify if it is a valid node
+    	// Verify Child
+    	Optional<RelationHierarchy> child = relationHierarchyRepository.findById(childStr);
+    	if(child.isEmpty()) {
+    		return false;
+    	}
+    	childRelationParent = child.get().getParent();
+    	// Verify Sub Category
+    	Optional<RelationHierarchy> subCategory = relationHierarchyRepository.findById(childRelationParent);
+    	if(subCategory.isEmpty() || !childRelationParent.equals(subCategoryStr)) {
+    		return false;
+    	}
+    	subCategoryRelationParent = subCategory.get().getParent();
+    	// Verify Category
+    	Optional<RelationHierarchy> category = relationHierarchyRepository.findById(subCategoryRelationParent);
+    	if(category.isEmpty() || !subCategoryRelationParent.equals(categoryStr)) {
+    		return false;
+    	}
+    	
+    	return true;
     }
     
 }

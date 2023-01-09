@@ -1,9 +1,17 @@
 spring:
   data:    mongodb:
-      uri: mongodb+srv://adminuser:adminpass@cluster0.rm6uo0x.mongodb.net/?retryWrites=true&w=majority
+      uri: mongodb+srv://relationAdminUser:relationAdminPass@cluster0.rm6uo0x.mongodb.net/?retryWrites=true&w=majority
+      authentication-database: admin
+      username: relationAdminUser
+      password: relationAdminPass
+      database: MyDatabase
+      port: 8888
+      host: localhost
       
 server:
-  port: 8888
+  port: 8889
   
 #spring.data.mongodb.uri = mongodb+srv://adminuser:adminpass@cluster0.rm6uo0x.mongodb.net/?retryWrites=true&w=majority
 #server.port = 8888
+
+      

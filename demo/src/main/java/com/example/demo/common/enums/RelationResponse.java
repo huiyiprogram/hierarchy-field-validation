@@ -1,21 +1,5 @@
 package com.example.demo.common.enums;
 
-import com.example.demo.common.enums.IHierarchyEnumBase.HierarchyValidationStrategy;
-import com.example.demo.common.validation.HierarchyValidation;
-import com.example.demo.enumadvanced.RelationChildAdvanced;
-
-
-// Change validationEnum(Which enum to check against), strategy according to preference
-@HierarchyValidation.List({ 
-	@HierarchyValidation(
-		category = "category", 
-		subCategory = "subCategory", 
-		child = "finalRelation",
-		validationEnum = RelationChildAdvanced.class,
-		strategy = HierarchyValidationStrategy.TREE_STRUCTURE_PARENT_REF,
-		message = "Invalid Relation Hierarchy Structure!"
-    )
-})
 public class RelationResponse {
 	
 	private String category;
